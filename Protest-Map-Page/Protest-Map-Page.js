@@ -957,82 +957,6 @@ function createMarker(lat, lng, popupContent) {
 }
 
 
-// Function to add a protest marker with reverse geocoding
-async function addProtestMarker(lat, lng, userId, extraData = {}) {
-    try {
-        // 1️⃣ Get address from Nominatim
-        const nominatimUrl = `https://boycott-backend-production.up.railway.app/nominatim/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
-        const nominatimResp = await fetch(nominatimUrl);
-        const nominatimData = await nominatimResp.json();
-
-        let address = '';
-        let neighborhood = '';
-
-        if (!nominatimData.error) {
-            address = nominatimData.display_name || '';
-            if (nominatimData.address) {
-                neighborhood = nominatimData.address.neighbourhood || nominatimData.address.suburb || '';
-            }
-        }
-
-        // 2️⃣ Build the marker data to send to your API
-        const markerData = {
-            lat,
-            lng,
-            address,
-            neighborhood,
-            description: extraData.description || '',
-            attendance: extraData.attendance || 0,
-            status: extraData.status || 'active',
-            notes: extraData.notes || '',
-            resources: extraData.resources || '',
-            user_id: userId
-        };
-
-        // 3️⃣ Save marker in the database via your Flask API
-        const response = await fetch('https://boycott-backend-production.up.railway.app/api/protests', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(markerData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            console.error('Error adding protest:', result);
-            return;
-        }
-
-        console.log('Protest added with ID:', result.id);
-
-        // 4️⃣ Add marker to the map immediately
-        const marker = L.marker([lat, lng]).addTo(map);
-        marker.bindPopup(`
-            <strong>${markerData.description}</strong><br>
-            Address: ${markerData.address}<br>
-            Attendance: ${markerData.attendance}<br>
-            Notes: ${markerData.notes || 'N/A'}
-        `);
-
-    } catch (err) {
-        console.error('Error adding protest marker:', err);
-    }
-}
-
-map.on('click', function(e) {
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
-    const userId = 1; // Replace with logged-in user's ID
-
-    const popupContent = document.createElement('div');
-    popupContent.innerHTML = `<strong>Peaceful protest</strong><br>Attendance: <span id="attendance-1">0</span><br><button id="attend-btn-1">Attend</button>`;
-
-    createMarker(lat, lng, popupContent);
-
-    addProtestMarker(lat, lng, userId, { description: 'Peaceful protest' });
-});
-
-
 
 async function attendProtest(protestId) {
   const user_id = localStorage.getItem("user_id"); // get stored user ID
@@ -1059,41 +983,82 @@ async function attendProtest(protestId) {
     alert("Network error");
   }
 }
+// Updated createProtestMarker to show notes in the popup
+function createProtestMarker(lat, lng, protestId, userId, description = "Peaceful protest", notes = "") {
+    const popupContent = document.createElement('div');
+    popupContent.innerHTML = `
+        <strong>${description}</strong><br>
+        Notes: ${notes || 'N/A'}<br>
+        Attendance: <span id="attendance-${protestId}">0</span><br>
+        <button id="attend-btn-${protestId}">Attend</button>
+    `;
 
-const marker = L.marker([lat, lng]).addTo(map);
-marker.bindPopup(popupContent).openPopup();
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup(popupContent);
 
-// Wait for popup to open before adding listener
-marker.on('popupopen', () => {
-    const btn = document.getElementById(`attend-btn-${protestId}`);
-    if (btn) {
+    marker.on('popupopen', () => {
+        const btn = document.getElementById(`attend-btn-${protestId}`);
+        if (!btn) return;
+
         btn.onclick = async () => {
-            // Increment attendance visually
             const span = document.getElementById(`attendance-${protestId}`);
-            let current = parseInt(span.textContent);
-            current++;
-            span.textContent = current;
-
-            // Optional: Call backend
             try {
                 const res = await fetch(`https://boycott-backend-production.up.railway.app/api/protests/${protestId}/attend`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: 1 }) // replace with actual logged-in user ID
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
                 });
+
                 const data = await res.json();
-                if (!res.ok) {
-                    alert(data.error);
+
+                if (res.ok) {
+                    span.textContent = data.attendance;
+                    alert(`Attendance confirmed! Total attendees: ${data.attendance}`);
                 } else {
-                    span.textContent = data.attendance; // update with backend value
+                    alert(data.error);
                 }
             } catch (err) {
                 console.error(err);
+                alert("Network error. Could not update attendance.");
             }
         };
+    });
+}
+
+map.on('click', async (e) => {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    const userId = localStorage.getItem("user_id") || 1;
+
+    // Ask user for description and notes
+    const description = window.prompt("Enter a title/description for this protest:", "Peaceful protest");
+    if (!description) return; // Cancelled or empty
+
+    const notes = window.prompt("Enter any notes for this protest (optional):", "");
+    
+    try {
+        // Save new protest to backend
+        const res = await fetch(`https://boycott-backend-production.up.railway.app/api/protests`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ lat, lng, description, notes, attendance: 0, user_id: userId })
+        });
+
+        const result = await res.json();
+        if (!res.ok) {
+            console.error("Error adding protest:", result);
+            return;
+        }
+
+        const protestId = result.id;
+
+        // Create marker with Attend button
+        createProtestMarker(lat, lng, protestId, userId, description, notes);
+
+    } catch (err) {
+        console.error("Error adding protest:", err);
     }
 });
 
 
-map.on('click', e => handleNewLocation(e.latlng.lat, e.latlng.lng));
 

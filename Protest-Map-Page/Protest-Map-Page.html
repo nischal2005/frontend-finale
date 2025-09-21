@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Pittsburgh Protest Map</title>
     <meta charset="utf-8" />
@@ -10,10 +11,11 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="Protest-Map-Page.css">
-    <link rel="icon" type="image/png" href="../home-page/Scales_of_justice.png">
+    <link rel="icon" type="image/png" href="/scales_of_justice.png">
 </head>
+
 <body>
-    <a href="/index.html" class="home-btn">🏠 Home</a>
+    <a href="./index.html" class="home-btn">🏠 Home</a>
     <h2>Pittsburgh Protest Map</h2>
     <div id="map" style="height: 600px; width: 100%;"></div>
     <h3>Selected Locations:</h3>
@@ -33,36 +35,49 @@
         <tbody></tbody>
     </table>
 
-
-<form id="addProtestForm">
-    <input type="text" id="neighborhood" placeholder="Neighborhood" required>
-    <input type="text" id="address" placeholder="Address" required>
-    <input type="text" id="description" placeholder="Description">
-    <input type="number" id="attendance" placeholder="Attendance">
-    <input type="text" id="lat" placeholder="Latitude" required>
-    <input type="text" id="lng" placeholder="Longitude" required>
-    <button type="submit">Add Protest</button>
-</form>
-
-<script>
-document.getElementById('addProtestForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const protestData = {
-        neighborhood: document.getElementById('neighborhood').value,
-        address: document.getElementById('address').value,
-        description: document.getElementById('description').value,
-        attendance: document.getElementById('attendance').value ? parseInt(document.getElementById('attendance').value) : 0,
-        lat: parseFloat(document.getElementById('lat').value),
-        lng: parseFloat(document.getElementById('lng').value)
-    };
-    addProtest(protestData);
-});
-</script>
-
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- Custom JS -->
     <script src="Protest-Map-Page.js"></script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
 </body>
+
 </html>

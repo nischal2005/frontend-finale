@@ -473,7 +473,7 @@ async function tryNominatimGeocoding(lat, lng) {
     try {
         // Call the local backend proxy which forwards to Nominatim with a proper User-Agent.
         // Make sure the backend is running on port 5000 (Flask) and CORS is configured.
-        const proxyUrl = `http://boycott-backend-production.up.railway.app/nominatim/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+        const proxyUrl = `https://boycott-backend-production.up.railway.app/nominatim/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
         const res = await fetch(proxyUrl);
         const data = await res.json();
         
@@ -858,7 +858,7 @@ function toggleEdit(index) {
 
 async function addProtestMarker(markerData) {
     try {
-        const response = await fetch('http://boycott-backend-production.up.railway.app/api/protests', {
+        const response = await fetch('https://boycott-backend-production.up.railway.app/api/protests', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(markerData)
@@ -883,7 +883,7 @@ async function loadProtests(userId) { // pass in logged-in user's ID
     console.warn("No logged-in user ID found. Attend buttons won't work.");
 }
     try {
-        const response = await fetch('http://boycott-backend-production.up.railway.app/api/protests');
+        const response = await fetch('https://boycott-backend-production.up.railway.app/api/protests');
         const protests = await response.json();
 
         protests.forEach(protest => {
@@ -901,7 +901,7 @@ async function loadProtests(userId) { // pass in logged-in user's ID
             attendButton.innerText = "Attend";
             attendButton.onclick = async () => {
                 try {
-                    const res = await fetch(`http://boycott-backend-production.up.railway.app/api/protests/${protest.id}/attend`, {
+                    const res = await fetch(`https://boycott-backend-production.up.railway.app/api/protests/${protest.id}/attend`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ user_id: userId })
@@ -949,12 +949,19 @@ function saveEdit(index) {
     updateLocationTable();
 }
 
+// Instead of using undefined `lat` and `lng`
+function createMarker(lat, lng, popupContent) {
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup(popupContent).openPopup();
+    return marker;
+}
+
 
 // Function to add a protest marker with reverse geocoding
 async function addProtestMarker(lat, lng, userId, extraData = {}) {
     try {
         // 1️⃣ Get address from Nominatim
-        const nominatimUrl = `http://boycott-backend-production.up.railway.app/nominatim/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+        const nominatimUrl = `https://boycott-backend-production.up.railway.app/nominatim/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
         const nominatimResp = await fetch(nominatimUrl);
         const nominatimData = await nominatimResp.json();
 
@@ -983,7 +990,7 @@ async function addProtestMarker(lat, lng, userId, extraData = {}) {
         };
 
         // 3️⃣ Save marker in the database via your Flask API
-        const response = await fetch('http://boycott-backend-production.up.railway.app/api/protests', {
+        const response = await fetch('https://boycott-backend-production.up.railway.app/api/protests', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(markerData)
@@ -1016,8 +1023,15 @@ map.on('click', function(e) {
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
     const userId = 1; // Replace with logged-in user's ID
+
+    const popupContent = document.createElement('div');
+    popupContent.innerHTML = `<strong>Peaceful protest</strong><br>Attendance: <span id="attendance-1">0</span><br><button id="attend-btn-1">Attend</button>`;
+
+    createMarker(lat, lng, popupContent);
+
     addProtestMarker(lat, lng, userId, { description: 'Peaceful protest' });
 });
+
 
 
 async function attendProtest(protestId) {
@@ -1028,7 +1042,7 @@ async function attendProtest(protestId) {
   }
 
   try {
-    const res = await fetch(`http://boycott-backend-production.up.railway.app/api/protests/${protestId}/attend`, {
+    const res = await fetch(`https://boycott-backend-production.up.railway.app/api/protests/${protestId}/attend`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ user_id: user_id })
@@ -1046,5 +1060,40 @@ async function attendProtest(protestId) {
   }
 }
 
+const marker = L.marker([lat, lng]).addTo(map);
+marker.bindPopup(popupContent).openPopup();
+
+// Wait for popup to open before adding listener
+marker.on('popupopen', () => {
+    const btn = document.getElementById(`attend-btn-${protestId}`);
+    if (btn) {
+        btn.onclick = async () => {
+            // Increment attendance visually
+            const span = document.getElementById(`attendance-${protestId}`);
+            let current = parseInt(span.textContent);
+            current++;
+            span.textContent = current;
+
+            // Optional: Call backend
+            try {
+                const res = await fetch(`https://boycott-backend-production.up.railway.app/api/protests/${protestId}/attend`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: 1 }) // replace with actual logged-in user ID
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.error);
+                } else {
+                    span.textContent = data.attendance; // update with backend value
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+    }
+});
+
 
 map.on('click', e => handleNewLocation(e.latlng.lat, e.latlng.lng));
+

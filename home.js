@@ -64,7 +64,7 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
   const username = document.getElementById("signup-username").value;
   const password = document.getElementById("signup-password").value;
 
-  const res = await fetch("http://boycott-backend-production.up.railway.app/signup", {
+  const res = await fetch("https://boycott-backend-production.up.railway.app/signup", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({username, password})
@@ -85,7 +85,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const username = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
 
-  const res = await fetch("http://boycott-backend-production.up.railway.app/login", {
+  const res = await fetch("https://boycott-backend-production.up.railway.app/login", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({username, password})

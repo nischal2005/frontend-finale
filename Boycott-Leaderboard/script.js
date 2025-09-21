@@ -10,7 +10,7 @@ async function loadLeaderboard() {
     const user_id = localStorage.getItem("user_id"); // get current user ID
 
     try {
-        const res = await fetch(`http://boycott-backend-production.up.railway.app/leaderboard?mode=${currentMode}`);
+        const res = await fetch(`https://boycott-backend-production.up.railway.app/leaderboard?mode=${currentMode}`);
         const data = await res.json();
 
         ul.innerHTML = ''; // clear existing list
@@ -83,7 +83,7 @@ async function createBoycott(e) {
     }
 
     try {
-        const res = await fetch('http://boycott-backend-production.up.railway.app/boycotts', {
+        const res = await fetch('https://boycott-backend-production.up.railway.app/boycotts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ company, reason })

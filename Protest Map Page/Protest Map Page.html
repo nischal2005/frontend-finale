@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pittsburgh Protest Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Protest Map Page.css">
+    <link rel="icon" type="image/png" href="../home-page/Scales_of_justice.png">
+</head>
+<body>
+    <a href="/home-page/home.html" class="home-btn">🏠 Home</a>
+    <h2>Pittsburgh Protest Map</h2>
+    <div id="map" style="height: 600px; width: 100%;"></div>
+    <h3>Selected Locations:</h3>
+    <table id="locationTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Address</th>
+                <th>Neighborhood</th>
+                <th>Description</th>
+                <th>Attendance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+<form id="addProtestForm">
+    <input type="text" id="neighborhood" placeholder="Neighborhood" required>
+    <input type="text" id="address" placeholder="Address" required>
+    <input type="text" id="description" placeholder="Description">
+    <input type="number" id="attendance" placeholder="Attendance">
+    <input type="text" id="lat" placeholder="Latitude" required>
+    <input type="text" id="lng" placeholder="Longitude" required>
+    <button type="submit">Add Protest</button>
+</form>
+
+<script>
+document.getElementById('addProtestForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const protestData = {
+        neighborhood: document.getElementById('neighborhood').value,
+        address: document.getElementById('address').value,
+        description: document.getElementById('description').value,
+        attendance: document.getElementById('attendance').value ? parseInt(document.getElementById('attendance').value) : 0,
+        lat: parseFloat(document.getElementById('lat').value),
+        lng: parseFloat(document.getElementById('lng').value)
+    };
+    addProtest(protestData);
+});
+</script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom JS -->
+    <script src="Protest Map Page.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>About Us</title>
+  <link rel="stylesheet" href="page.css">
+  <link rel="icon" type="image/png" href="../home-page/Scales_of_justice.png">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="../home-page/home.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Particles background -->
+  <div id="bg"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-quote">
+        <h1 class="hero-title">No One Is Too Small to Make a Difference</h1>
+        <p class="hero-author">- Greta Thunberg</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+    
+    <!-- Constitutional Foundation Section -->
+    <section class="constitution-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Constitutional Foundation</h2>
+          <div class="title-underline"></div>
+        </div>
+        
+        <div class="amendment-card">
+          <div class="amendment-header">
+            <h3>First Amendment</h3>
+            <div class="amendment-date">Ratified December 15, 1791</div>
+          </div>
+          <p class="amendment-text">
+            Congress shall make no law respecting an establishment of religion, 
+            or prohibiting the free exercise thereof; or abridging the freedom 
+            of speech, or of the press; or the right of the people peaceably to 
+            assemble, and to petition the Government for a redress of grievances.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Protest Icons Section -->
+    <section class="icons-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Protest Icons</h2>
+          <div class="title-underline"></div>
+          <p class="section-subtitle">Champions of change who shaped history through peaceful resistance</p>
+        </div>
+        
+        <div class="carousel-container">
+          <div class="carousel-wrapper">
+            <button class="carousel-btn prev" id="prevBtn" aria-label="Previous slide">&#10094;</button>
+            <div class="carousel" id="carousel">
+              <div class="card active" data-index="0">
+                <img src="images/mlk.png" alt="Martin Luther King Jr." loading="lazy">
+                <div class="card-content">
+                  <h3>Martin Luther King Jr.</h3>
+                  <div class="card-tags">
+                    <span class="tag">Civil Rights</span>
+                    <span class="tag">Nonviolence</span>
+                  </div>
+                  <p>Leader of the Civil Rights Movement, advocating for nonviolent protest to achieve racial equality in the United States.</p>
+                </div>
+              </div>
+              <div class="card" data-index="1">
+                <img src="images/chavez.png" alt="Cesar Chavez" loading="lazy">
+                <div class="card-content">
+                  <h3>Cesar Chavez</h3>
+                  <div class="card-tags">
+                    <span class="tag">Labor Rights</span>
+                    <span class="tag">Farm Workers</span>
+                  </div>
+                  <p>Co-founder of the United Farm Workers, he fought for better wages and conditions for farmworkers through organized nonviolent campaigns.</p>
+                </div>
+              </div>
+              <div class="card" data-index="2">
+                <img src="images/malcomx.png" alt="Malcolm X" loading="lazy">
+                <div class="card-content">
+                  <h3>Malcolm X</h3>
+                  <div class="card-tags">
+                    <span class="tag">Black Power</span>
+                    <span class="tag">Self-Determination</span>
+                  </div>
+                  <p>Prominent figure in the fight for African American rights, advocating for Black empowerment and self-determination.</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn next" id="nextBtn" aria-label="Next slide">&#10095;</button>
+          </div>
+          
+          <!-- Carousel indicators -->
+          <div class="carousel-indicators" id="indicators">
+            <button class="indicator active" data-slide="0" aria-label="Go to slide 1"></button>
+            <button class="indicator" data-slide="1" aria-label="Go to slide 2"></button>
+            <button class="indicator" data-slide="2" aria-label="Go to slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="section-container">
+        <div class="cta-content">
+          <h2>Your Voice Matters</h2>
+          <p>Every great movement started with individuals who believed change was possible. Join the conversation and make your voice heard.</p>
+          <div class="cta-buttons">
+            <a href="#" class="btn-primary">Get Involved</a>
+            <a href="#" class="btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="particles.js"></script>
+  <script src="about.js"></script>
+</body>
+</html>

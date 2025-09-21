@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="Profile.css">
+  <link rel="icon" type="image/png" href="../home-page/Scales_of_justice.png">
+</head>
+<body>
+
+  <!-- Home button -->
+  <a href="/home-page/home.html" class="home-btn">Home</a>
+
+  <div class="profile-container">
+    <h2>User Profile</h2>
+
+    <div class="profile-picture-container">
+      <img src="profile-pic.png" alt="Profile Picture" class="profile-picture" id="profilePic">
+      <span class="no-image-text" id="noImageText">No Image</span>
+    </div>
+
+    <!-- Buttons below profile picture -->
+    <div class="picture-buttons">
+      <label for="uploadInput" class="add-btn">Add</label>
+      <button class="remove-btn" id="removePic">Remove</button>
+      <input type="file" id="uploadInput" accept="image/png, image/jpeg, image/gif, image/webp" style="display:none">
+    </div>
+
+    <div class="profile-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter username">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter email">
+
+      <button id="saveProfile">Save Profile</button>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast">Profile Saved!</div>
+
+  <script>
+    const profilePic = document.getElementById("profilePic");
+    const noImageText = document.getElementById("noImageText");
+    const uploadInput = document.getElementById("uploadInput");
+
+    function updateNoImageText() {
+      if (profilePic.src.includes("profile-pic.png")) {
+        noImageText.style.display = "flex";
+        profilePic.style.display = "none";
+      } else {
+        noImageText.style.display = "none";
+        profilePic.style.display = "block";
+      }
+    }
+
+    // Initial check
+    updateNoImageText();
+
+    // Upload profile picture
+    uploadInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          profilePic.src = e.target.result;
+          updateNoImageText();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Remove profile picture
+    document.getElementById("removePic").addEventListener("click", () => {
+      profilePic.src = "profile-pic.png";
+      updateNoImageText();
+    });
+
+    // Toast function
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    document.getElementById("saveProfile").addEventListener("click", () => {
+      showToast("Profile Saved!");
+    });
+  </script>
+</body>
+</html>

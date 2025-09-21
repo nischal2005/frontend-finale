@@ -1,0 +1,203 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background-color: #0c0e18;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.home-btn:hover {
+    background-color: #5461d1;
+}
+
+/* Links */
+.player {
+    text-decoration: none;
+    color: #333;
+}
+
+.player:hover {
+    color: #667eea;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+}
+
+/* Container */
+.leaderboard-container {
+  text-align: center;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Title */
+h1 {
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+  color: #333;
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #ddd;
+}
+
+.btn.active {
+  background: #667eea;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Leaderboard */
+.leaderboard {
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+  padding: 20px;
+  display: none;
+  overflow-y: auto;
+}
+
+.leaderboard.active {
+  display: block;
+}
+
+.leaderboard ul {
+  list-style: none;
+  max-height: 60vh;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 1.1rem;
+}
+
+.leaderboard li:last-child {
+  border-bottom: none;
+}
+
+.rank {
+  font-weight: bold;
+  width: 30px;
+}
+
+.player {
+  flex: 1;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.score {
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.extra {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 🚀 Create Boycott Section */
+.create-boycott {
+  background: #f9f9ff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+.create-boycott h2 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.create-boycott form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.create-boycott input,
+.create-boycott textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.create-boycott textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.create-boycott button {
+  background: #667eea;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.create-boycott button:hover {
+  background: #5461d1;
+}

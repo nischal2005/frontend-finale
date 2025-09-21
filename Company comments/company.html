@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Comments</title>
+    <link rel="stylesheet" href="company.css">
+    <link rel="icon" type="image/png" href="../home-page/Scales_of_justice.png">
+</head>
+<body>
+   <div class="container">
+    <h1>Company Comments</h1>
+
+    <!-- Display company name -->
+    <div class="company-name">
+        <strong>Company Name:</strong> <span id="companyName">Placeholder Company</span>
+    </div>
+
+    <!-- Comment form -->
+    <form id="commentForm">
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+        <button type="submit">Add Comment</button>
+    </form>
+
+    <h2>All Comments</h2>
+    <div id="commentsList" class="comments-list"></div>
+</div>
+    <script src="company.js"></script>
+</body>
+</html>

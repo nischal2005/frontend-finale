@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disaster Watch</title>
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/png" href="Scales_of_justice.png">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <img src="Scales_of_justice.png" alt="Logo" class="logo">
+    <nav class="navigation">
+      <a href="#" class="active">Home</a>
+      <a href="../Protest Map Page/Protest Map Page.html">Protest Map</a>
+      <a href="/Boycott Leaderboard/Index.html">Leaderboard</a>
+      <a href="../About_Us/about_us.html">About</a>
+      <a href="#">Service</a>
+    </nav>
+  </header>
+
+  <!-- PARALLAX SECTION -->
+  <section class="parallax">
+    <img src="./parallax backgound pack/_11_background.png" id="sky" alt="sky">
+    <img src="./parallax backgound pack/_10_distant_clouds.png" id="cloudsBack" alt="clouds">
+    <img src="./parallax backgound pack/_09_distant_clouds1.png" id="cloudsMidBack" alt="clouds">
+    <img src="./parallax backgound pack/_08_clouds.png" id="cloudsMidFront" alt="clouds">
+    <img src="./parallax backgound pack/_07_huge_clouds.png" id="cloudsFront" alt="clouds">
+    <h2 id="titleText">Voices United</h2>
+
+    <img src="./parallax backgound pack/_06_hill2.png" id="hillBack" alt="hill">
+    <img src="./parallax backgound pack/_05_hill1.png" id="hillFront" alt="hill">
+    <img src="./parallax backgound pack/_04_bushes.png" id="bushes" alt="bushes">
+    <img src="./parallax backgound pack/buildings.png" id="buildings" alt="buildings">
+    <img src="./parallax backgound pack/thepeople.png" id="people" alt="people">
+    <img src="./parallax backgound pack/_03_distant_trees.png" id="ground" alt="ground">
+  </section>
+
+
+
+<!-- LOGIN SECTION -->
+<!-- LOGIN SECTION -->
+<!-- LOGIN SECTION -->
+<div class="frame">
+  <!-- floating animated boxes -->
+  <div class="box">
+    <div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div>
+  </div>
+
+  <!-- login container -->
+  <div class="container" id="container">
+    <!-- Sign Up form -->
+    <div class="form-container sign-up">
+      <form id="signup-form">
+        <h1>Create Account</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <input type="text" id="signup-username" placeholder="Username">
+        <input type="password" id="signup-password" placeholder="Password">
+        <button>Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sign In form -->
+    <div class="form-container sign-in">
+      <form id = "login-form">
+        <h1>Sign In</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email password</span>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <a href="#">Forget Your Password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Toggle panels -->
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p>Enter your personal details to use all of site features</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello, Friend!</h1>
+          <p>Register with your personal details to use all of site features</p>
+          <button class="hidden bottom-btn" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Music Toggle Button (Top Right) -->
+<button id="music-toggle">
+  <i id="music-icon" class="fa fa-volume-up"></i>
+</button>
+
+<!-- Audio -->
+<audio id="background-music" loop>
+  <source src="/home-page/Jazz_Music_1.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<script src="home.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
